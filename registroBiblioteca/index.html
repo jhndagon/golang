@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script>
+        var xmlhttp;
+
+        function init() {
+            xmlhttp = new XMLHttpRequest();
+
+        }
+
+        function getdetails() {
+
+            var url = "http://localhost:8000/personas";
+
+            xmlhttp.open('GET', url, true);
+            xmlhttp.send(null);
+            xmlhttp.onreadystatechange = function () {
+
+                if (xmlhttp.readyState == 4) {
+                    if (xmlhttp.status == 200) {
+                        var det = eval(xmlhttp.responseText);
+
+                        //document.getElementById("prueba").innerHTML=det[0]["nombres"];
+                    }
+                }
+
+            };
+        }
+
+        function registrar1() {
+
+            var nombre = document.getElementById("nombres");
+            var usuario = document.getElementById("usuario");
+            var correo = document.getElementById("correo");
+            var contrasena = document.getElementById("contrasena");
+
+            var data = {};
+            data.nombres = nombre.value;
+            data.correo = correo.value;
+            data.usuario = usuario.value;
+            data.contrasena = contrasena.value;
+
+            console.log(data);
+            xmlhttp = new XMLHttpRequest();
+            var url = "http://localhost:8000/personas";
+            var json = JSON.stringify(data);
+            xmlhttp.open("post", url, true);
+            xmlhttp.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+            xmlhttp.send(json);
+            xmlhttp.onload = function () {
+                var users = JSON.parse(xmlhttp.responseText);
+                if (xmlhttp.readyState == 4 && xmlhttp.status == "201") {
+                    
+                } else {
+                    
+                }
+            }
+            
+        }
+
+        init()
+    </script>
+
+</head>
+
+<body>
+
+
+    <form class="form-horizontal" method="POST" action="" target="request">
+        <fieldset>
+
+            <!-- Form Name -->
+            <legend>Registro de usuario</legend>
+
+            <!-- Text input-->
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="nombres">Nombres</label>
+                <div class="col-md-4">
+                    <input id="nombres" name="nombres" type="text" placeholder="nombres" class="form-control input-md" required="">
+
+                </div>
+            </div>
+
+            <!-- Text input-->
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="usuario">Usuario</label>
+                <div class="col-md-4">
+                    <input id="usuario" name="usuario" type="text" placeholder="usuario" class="form-control input-md" required="">
+
+                </div>
+            </div>
+
+            <!-- Text input-->
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="correo">Correo</label>
+                <div class="col-md-4">
+                    <input id="correo" name="correo" type="text" placeholder="correo" class="form-control input-md" required="">
+
+                </div>
+            </div>
+
+            <!-- Password input-->
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="contrasena">Contraseña</label>
+                <div class="col-md-4">
+                    <input id="contrasena" name="contrasena" type="password" placeholder="contraseña" class="form-control input-md" required="">
+
+                </div>
+            </div>
+
+            <!-- Button -->
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="registrar"></label>
+                <div class="col-md-4">
+                    <input type="button" id="registrar" name="registrar" class="btn btn-inverse" onclick="registrar1()" value="Registrar" />
+                </div>
+            </div>
+
+        </fieldset>
+    </form>
+    <div id="resultado"></div>
+</body>
+
+</html>
