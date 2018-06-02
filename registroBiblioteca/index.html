@@ -8,65 +8,7 @@
     <title>Document</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script>
-        var xmlhttp;
-
-        function init() {
-            xmlhttp = new XMLHttpRequest();
-
-        }
-
-        function getdetails() {
-
-            var url = "http://localhost:8000/personas";
-
-            xmlhttp.open('GET', url, true);
-            xmlhttp.send(null);
-            xmlhttp.onreadystatechange = function () {
-
-                if (xmlhttp.readyState == 4) {
-                    if (xmlhttp.status == 200) {
-                        var det = eval(xmlhttp.responseText);
-
-                        //document.getElementById("prueba").innerHTML=det[0]["nombres"];
-                    }
-                }
-
-            };
-        }
-
-        function registrar1() {
-
-            var nombre = document.getElementById("nombres");
-            var usuario = document.getElementById("usuario");
-            var correo = document.getElementById("correo");
-            var contrasena = document.getElementById("contrasena");
-
-            var data = {};
-            data.nombres = nombre.value;
-            data.correo = correo.value;
-            data.usuario = usuario.value;
-            data.contrasena = contrasena.value;
-
-            console.log(data);
-            xmlhttp = new XMLHttpRequest();
-            var url = "http://localhost:8000/personas";
-            var json = JSON.stringify(data);
-            xmlhttp.open("post", url, true);
-            xmlhttp.setRequestHeader('Content-type', 'application/json; charset=utf-8');
-            xmlhttp.send(json);
-            xmlhttp.onload = function () {
-                var users = JSON.parse(xmlhttp.responseText);
-                if (xmlhttp.readyState == 4 && xmlhttp.status == "201") {
-                    
-                } else {
-                    
-                }
-            }
-            
-        }
-
-        init()
+    <script src="./script.js">       
     </script>
 
 </head>
@@ -74,7 +16,7 @@
 <body>
 
 
-    <form class="form-horizontal" method="POST" action="" target="request">
+    <form class="form-horizontal" method="POST">
         <fieldset>
 
             <!-- Form Name -->
@@ -120,13 +62,44 @@
             <div class="form-group">
                 <label class="col-md-4 control-label" for="registrar"></label>
                 <div class="col-md-4">
-                    <input type="button" id="registrar" name="registrar" class="btn btn-inverse" onclick="registrar1()" value="Registrar" />
+                    <input type="button" id="registrar" name="registrar" class="btn btn-inverse" value="Registrar" onclick="registrar1()" />
                 </div>
             </div>
 
         </fieldset>
     </form>
     <div id="resultado"></div>
+
+    <form class="form-horizontal" method="GET">
+        <fieldset>
+
+            <!-- Form Name -->
+            <legend>Para conocer la información de un usuario registrado, ingrese el nombre de usuario:</legend>
+
+            <!-- Text input-->
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="usuario1">Usuario:</label>
+                <div class="col-md-4">
+                    <input id="usuario1" name="usuario1" type="text" placeholder="usuario" class="form-control input-md" required="">
+
+                </div>
+            </div>
+
+            <!-- Button -->
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="consultar"></label>
+                <div class="col-md-4">
+                    <input type="button" id="consultar" name="consultar" class="btn btn-primary" onclick="consultar1()" value="Consultar" />
+                </div>
+            </div>
+            <div id="resultadoConsulta"></div>
+            <div id="nombreU"></div>
+            <div id="usuarioU"></div>
+            <div id="correoU"></div>
+
+
+        </fieldset>
+    </form>
 </body>
 
 </html>
