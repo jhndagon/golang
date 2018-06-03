@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
+
 	"github.com/gorilla/mux"
 )
 
@@ -23,6 +24,7 @@ func GetPersonas(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(personas)
 }
 
+//se obtiene información de un usuario
 func GetPersona(w http.ResponseWriter, r *http.Request) {
 	parametros := mux.Vars(r)
 	w.Header().Set("Content-Type", "application/json")
@@ -32,7 +34,7 @@ func GetPersona(w http.ResponseWriter, r *http.Request) {
 			json.NewEncoder(w).Encode(item)
 			return
 		}
-	}	
+	}
 	json.NewEncoder(w).Encode(&Persona{})
 }
 
@@ -46,8 +48,10 @@ func CrearPersona(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 	router := mux.NewRouter().StrictSlash(false)
-	personas = append(personas, Persona{Nombres: "Andrés Goméz Zapata", Correo: "andres.gomez@correo.com", Usuario: "andresG", Contrasena: "1234"})
-	personas = append(personas, Persona{Nombres: "Carlos Perez Villa", Correo: "carlos.Perez@correo.com", Usuario: "carlosP", Contrasena: "7654"})
+	personas = append(personas, Persona{Nombres: "Andrés Goméz Zapata", Correo: "andres.gomez@correo.com",
+		Usuario: "andresG", Contrasena: "1234"})
+	personas = append(personas, Persona{Nombres: "Carlos Perez Villa", Correo: "carlos.Perez@correo.com",
+		Usuario: "carlosP", Contrasena: "7654"})
 	router.HandleFunc("/personas", GetPersonas).Methods("GET")
 	router.HandleFunc("/personas/{usuario}", GetPersona).Methods("GET")
 	router.HandleFunc("/personas", CrearPersona).Methods("POST")
